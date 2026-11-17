@@ -1,57 +1,57 @@
 # social2md
 
-**一条链接进去，一份完整文档出来。**
+[English](README.md) · [中文](README.zh-CN.md)
 
-A share link in, a complete structured document out — for Chinese social media.
+**A share link in, a complete structured document out.**
 
-小红书、抖音、快手的分享链接，直接变成带**视频全文、图文文字、关键细节**的结构化 Markdown + HTML。不是只给你标题和简介。
+Turn Xiaohongshu (RED), Douyin, and Kuaishou share links into structured Markdown with the **full video transcript, text from images, and key details** — plus a styled HTML preview. Not just the title and caption.
 
-- **抖音**：扫码登录一次，让浏览器自己签名、CDP 截获数据。不逆向 `a_bogus`，不用手配 cookie。
-- **图文笔记**：Apple Vision OCR，图片里写的字也提取出来。
-- **一个 Skill 通吃**：Claude Code / Codex / WorkBuddy / Pi / Hermes / OpenClaw 都能自动发现。
-- **全部本地**：faster-whisper 转录 + Apple Vision OCR + Markdown 转 HTML，内容不上传第三方。
+- **Douyin**: Scan a QR code once. The logged-in browser signs its own requests and CDP captures the data — no reverse-engineering `a_bogus`, no hand-maintained cookies.
+- **Image notes**: Apple Vision OCR extracts text baked into images.
+- **One skill, every agent**: Auto-discovered by Claude Code, Codex, WorkBuddy, Pi, Hermes, and OpenClaw.
+- **Fully local**: faster-whisper transcription, Apple Vision OCR, and Markdown→HTML all run on your machine. Nothing is uploaded to third parties.
 
 ---
 
-## 为什么做这个
+## Why this exists
 
-刷到一条有用的视频或图文，想留下来仔细看，通常只有三条路：
+You find a useful video or image post. Usually you have three bad options:
 
-1. 下载视频——存了一堆 mp4，从来没再看。
-2. 复制标题和简介——真正的干货在视频里和图片里，全丢了。
-3. 找在线解析服务——上传内容到别人的服务器，接口随时失效。
+1. Download the video — a folder of mp4s you never reopen.
+2. Copy the title and caption — the real substance is spoken or baked into images, and you lose all of it.
+3. Use an online parser — your content goes to someone else's server, and the API breaks whenever they feel like it.
 
-现有的开源工具要么只覆盖 YouTube / TikTok，要么只做下载不做内容，要么要求你自己逆向签名、维护 cookie。`social2md` 想做的是**第四种**：给一条链接，拿回一份真正能读、能搜、能交给 Agent 的完整文档。
+Existing open-source tools either cover only YouTube/TikTok, stop at downloading, or make you reverse-engineer signatures and babysit cookies. `social2md` is the **fourth option**: give it a link, get back a document you can actually read, search, and hand to an agent.
 
-## 和同类项目的区别
+## How it compares
 
-截至 2026-11 的公开信息，尽量客观对比：
+Public information as of 2026-11, an honest comparison:
 
-| 项目 | Stars | 覆盖 | 视频转文字 | 图文 OCR | 登录方式 |
+| Project | Stars | Coverage | Speech-to-text | Image OCR | Login |
 |---|---:|---|---|---|---|
-| **social2md** | — | 小红书 + 抖音 + 快手 | 本地 faster-whisper | **Apple Vision** | 抖音扫码一次，其余免登录 |
-| `chubbyguan/chubbyskills` | ~1300 | 10+ 中文平台 + 知识库 | 字幕优先 + 转录 | 不做 OCR | 小红书需自配 cookie |
-| `JimmySadek/video-fetcher-to-markdown` | ~530 | YouTube / IG / TikTok / X | 本地 Whisper | 短视频抽帧 | 视平台而定 |
-| `chenxiachan/xhs-claude-skills` | ~430 | 仅小红书 | 部分支持 | 不突出 | 依赖 Claude Code |
-| `putyy/res-downloader`、`JoeanAmier/XHS-Downloader` | 1.3w–2.1w | 多平台 | 不做 | 不做 | 多为下载器 |
+| **social2md** | — | Xiaohongshu + Douyin + Kuaishou | Local faster-whisper | **Apple Vision** | Douyin QR once, others none |
+| `chubbyguan/chubbyskills` | ~1300 | 10+ CN platforms + knowledge base | Captions first + ASR | None | XHS needs your own cookie |
+| `JimmySadek/video-fetcher-to-markdown` | ~530 | YouTube / IG / TikTok / X | Local Whisper | Video frames | Varies by site |
+| `chenxiachan/xhs-claude-skills` | ~430 | Xiaohongshu only | Partial | Not a focus | Claude Code only |
+| `putyy/res-downloader`, `JoeanAmier/XHS-Downloader` | 13k–21k | Many platforms | No | No | Mostly downloaders |
 
-一句话：**下载器不产内容，英文工具不覆盖中文平台，中文知识库工具不做 OCR 且要你伺候 cookie。** 我们补的是中间那块。
+In short: **downloaders don't produce content, English-first tools don't cover Chinese platforms, and Chinese knowledge-base tools skip OCR and make you manage cookies.** We fill the gap in the middle.
 
-## 支持平台
+## Supported platforms
 
-| 平台 | 链接形态 | 登录 | 输出 |
+| Platform | Link formats | Login | Output |
 |---|---|---|---|
-| 小红书 | `xhslink.cn`、`xiaohongshu.com` | 不需要 | 视频转录 / 图文 OCR / 结构化文档 |
-| 抖音 | `v.douyin.com`、`douyin.com`、15–19 位 aweme_id | **一次性扫码** | 视频转录 / 结构化文档 |
-| 快手 | `v.kuaishou.com`、`kuaishou.com` | 不需要 | 视频转录 / 结构化文档 |
+| Xiaohongshu (RED) | `xhslink.cn`, `xiaohongshu.com` | None | Video transcript / image OCR / structured doc |
+| Douyin | `v.douyin.com`, `douyin.com`, 15–19 digit aweme_id | **One-time QR scan** | Video transcript / structured doc |
+| Kuaishou | `v.kuaishou.com`, `kuaishou.com` | None | Video transcript / structured doc |
 
-> 小红书部分旧笔记缺少 `xsec_token` 会解析失败，换新分享链接即可。平台接口会变，失败时重跑解析步骤拿新的签名 URL。
+> Some older Xiaohongshu notes without `xsec_token` fail to parse — grab a fresh share link from the app. Platform internals change; if a fetch fails, re-run the adapter to get a new signed URL.
 
 ---
 
-## 快速开始
+## Quick start
 
-### 1. 安装
+### 1. Install
 
 ```bash
 git clone https://github.com/EvansShuyw/social2md.git
@@ -59,19 +59,19 @@ cd social2md
 python3 -m pip install faster-whisper av
 ```
 
-第一次转录会从 `hf-mirror` 下载约 1.6 GB 模型。国内网络建议先设：
+The first transcription downloads a ~1.6 GB model from `hf-mirror`. If you're in mainland China, set:
 
 ```bash
 export HF_ENDPOINT=https://hf-mirror.com
 ```
 
-让 Agent 框架发现这个 Skill —— 跑一键脚本，它会软链到全部 8 个框架路径（幂等，可重复运行）：
+Let your agent framework discover the skill — run the one-shot script to symlink it into all 8 framework paths (idempotent, safe to re-run):
 
 ```bash
 chmod +x install.sh && ./install.sh
 ```
 
-或者手动软链到你在用的框架：
+Or link just the framework you use:
 
 ```bash
 ln -s "$(pwd)" ~/.claude/skills/social2md           # Claude Code
@@ -80,175 +80,173 @@ ln -s "$(pwd)" ~/.workbuddy/skills/social2md        # WorkBuddy
 ln -s "$(pwd)" ~/.hermes/skills/social2md           # Hermes
 ```
 
-`/Users/...` 之类绝对路径不需要，clone 到哪都能用。
+No hardcoded `/Users/...` paths — clone it anywhere.
 
-> 仓库根目录就是 Skill 目录，`SKILL.md` 的 `name` 已是 `social2md`。
+> The repo root *is* the skill directory. `SKILL.md` already declares `name: social2md`.
 
-### 2. 抖音一次性登录（只做一次）
+### 2. One-time Douyin login
 
 ```bash
 node scripts/douyin/login.mjs --timeout 600
 ```
 
-会弹出浏览器显示二维码，用抖音 App 扫码。二维码约 2–3 分钟过期，脚本会自动刷新。登录态保存在 `~/.workbuddy/douyin-profile`（可用 `DOUYIN_PROFILE` 改路径）。
+A browser window opens with a QR code — scan it with the Douyin app. Codes expire in ~2–3 minutes and refresh automatically. Login state is stored in `~/.workbuddy/douyin-profile` (override with `DOUYIN_PROFILE`).
 
-> 窗口可能被其他应用挡住。脚本会尝试激活浏览器；也可以自己切过去看。
+> If you don't see the window, it may be behind another app. The script tries to activate the browser; you can also switch to it manually.
 
-### 3. 跑一条链接
+### 3. Run a link
 
 ```bash
-# 小红书：先拿元数据
-python3 scripts/xhs/fetch_xhs.py "<小红书链接>" --out note.json
+# Xiaohongshu: fetch metadata first
+python3 scripts/xhs/fetch_xhs.py "<XHS link>" --out note.json
 
-# 抖音：短链 -> aweme_id -> CDP 截获
-node scripts/douyin/resolve_link.mjs "<抖音分享链接>"
-node scripts/douyin/cdp_extract.mjs "<aweme_id 或链接>" --out meta.json
+# Douyin: short link -> aweme_id -> CDP interception
+node scripts/douyin/resolve_link.mjs "<Douyin share link>"
+node scripts/douyin/cdp_extract.mjs "<aweme_id or link>" --out meta.json
 
-# 快手：从分享页直接解析
-node scripts/kuaishou/resolve_kuaishou.mjs "<快手分享链接>" --out meta.json
+# Kuaishou: parse directly from the share page
+node scripts/kuaishou/resolve_kuaishou.mjs "<Kuaishou link>" --out meta.json
 ```
 
-拿到签名播放地址后，下载、转录、渲染：
+Once you have the signed media URL: download, transcribe, render:
 
 ```bash
 python3 scripts/core/download_video.py "<SIGNED_URL>" --out media.mp4
 python3 scripts/core/transcribe.py media.mp4 --out-prefix transcript
 python3 scripts/core/md_to_html.py digest.md --out digest.html \
-    --title "标题" --subtitle "作者 · 来源" --theme blue
+    --title "Title" --subtitle "Author · Source" --theme blue
 ```
 
-图文笔记走另一条分支：
+Image/text notes take a different branch:
 
 ```bash
 python3 scripts/xhs/download_images.py note.json --out-dir images
 python3 scripts/xhs/ocr_images.py images/manifest.json --out ocr.txt
 ```
 
-然后把 OCR 文本和元数据整理成结构化 Markdown 即可。
+Then turn the OCR text + metadata into a structured Markdown digest.
 
-**实际使用时不必手写这些命令**——把链接丢给任意装了这个 Skill 的 Agent，它会按域名自动路由、选平台参考文档、跑完整流程并产出文档。上面的命令是给想手动调用或二次开发的人看的。
-
----
-
-## 你会得到什么
-
-- `digest.md` —— 结构化中文文档：核心结论、分主题内容、带时间戳的关键段落、术语与数据、存疑处标注。
-- `digest.html` —— 带样式的阅读版，蓝/橙/绿三色主题。
-- `transcript.txt` / `transcript.srt` —— 带时间戳的逐字稿和字幕。
-- `ocr.txt` —— 图文笔记的图片文字（macOS）。
-
-主旨和标题不等于内容：文档里会明确标出"标题党"和实际内容不一致的地方，不编造、不脑补。财经类内容里的数字会提示与实时行情核对。
+**In normal use you don't type these commands.** Give the link to any agent with this skill installed — it routes by domain, loads the right platform reference, runs the pipeline, and produces the document. The commands above are for manual invocation and hacking.
 
 ---
 
-## 它是怎么工作的
+## What you get
+
+- `digest.md` — a structured Chinese digest: key conclusions, themed sections, timestamped passages, terminology and figures, flagged uncertainties.
+- `digest.html` — a styled reading version in blue / orange / green themes.
+- `transcript.txt` / `transcript.srt` — timestamped transcript and subtitles.
+- `ocr.txt` — text extracted from images in image notes (macOS).
+
+Caption ≠ content. The digest explicitly flags where a clickbait title diverges from the actual content. Nothing is fabricated. Finance-related figures are marked for verification against live market data.
+
+## How it works
 
 ```
-分享链接
-  → 平台适配器（小红书 / 抖音 / 快手）
-      → 元数据 + 签名媒体地址
-  → 共享 core：断点续传下载（自动推断 UA + Referer）
-  → 本地转录 faster-whisper / 本地 Apple Vision OCR
-  → 结构化 Markdown → 带样式 HTML
+share link
+  → platform adapter (Xiaohongshu / Douyin / Kuaishou)
+      → metadata + signed media URL
+  → shared core: resumable download (UA + Referer auto-inferred)
+  → local faster-whisper ASR / local Apple Vision OCR
+  → structured Markdown → styled HTML
 ```
 
-几个关键设计：
+Key design decisions:
 
-- **单一真相源**：下载、转录、HTML 渲染都在 `scripts/core/`，修一处三平台受益；平台差异只在适配层。
-- **不逆向签名**：抖音让已登录的浏览器自己发请求，通过 CDP 在 `loadingFinished` 后取响应体，绕开 `a_bogus`、`msToken`、`ArgusSecurity`。
-- **静默失败防护**：抖音登录过期时接口会返回"看起来正常"的旧数据。`cdp_extract.mjs` 输出 `VERDICT=OK/EMPTY/BAD_STATUS/NO_PLAY_URL/STALE`，只有 `OK` 才能继续。
-- **CDN 坑位**：抖音签名播放链接不带浏览器 UA + Referer 会返回 355 字节的 403 页面，core 脚本已默认处理。
+- **Single source of truth**: download, transcription, and HTML rendering live in `scripts/core/` — one fix benefits all three platforms. Platform differences stay in thin adapters.
+- **No signature reverse-engineering**: a logged-in browser signs its own requests; CDP captures responses after `loadingFinished`, sidestepping `a_bogus`, `msToken`, and ArgusSecurity.
+- **Silent-failure guard**: an expired Douyin login returns plausible-looking stale JSON. `cdp_extract.mjs` emits `VERDICT=OK/EMPTY/BAD_STATUS/NO_PLAY_URL/STALE` — only `OK` is safe to continue.
+- **CDN quirks**: Douyin's signed play URL returns a 355-byte 403 HTML page without a browser UA + Referer. The core script handles this by default.
 
-各平台的完整坑位记录在 `references/`，按需加载，不占日常上下文。
+Full pitfall notes for each platform live in `references/`, loaded on demand so they don't eat your context.
 
-## Agent 框架支持
+## Agent framework support
 
-Skill 遵循开放的 Agent Skills 规范（`SKILL.md` + YAML frontmatter + `references/` + `scripts/`），已验证或被官方支持软链的框架：
+The skill follows the open Agent Skills convention (`SKILL.md` + YAML frontmatter + `references/` + `scripts/`). Verified or officially symlink-compatible:
 
-| 框架 | 目录 |
+| Framework | Directory |
 |---|---|
 | WorkBuddy | `~/.workbuddy/skills/` |
 | Claude Code | `~/.claude/skills/` |
-| Codex | `~/.agents/skills/`、`~/.codex/skills/` |
-| Pi | `~/.agents/skills/`、`~/.pi/agent/skills/` |
-| DeepSeek Harness | `~/.agents/skills/`、`~/.dsh/skills/` |
+| Codex | `~/.agents/skills/`, `~/.codex/skills/` |
+| Pi | `~/.agents/skills/`, `~/.pi/agent/skills/` |
+| DeepSeek Harness | `~/.agents/skills/`, `~/.dsh/skills/` |
 | OpenClaw | `~/.openclaw/workspace/skills/` |
 | Hermes | `~/.hermes/skills/` |
 
-`~/.agents/skills/` 是 Codex / Pi / DeepSeek Harness 的共同扫描根，链一次三家通吃。
+`~/.agents/skills/` is the shared scan root for Codex, Pi, and DeepSeek Harness — one link covers all three.
 
-## 依赖
+## Requirements
 
-| 用途 | 依赖 |
+| Need | Dependency |
 |---|---|
-| 本地转录 | Python 3.10+、`faster-whisper`、`av`；首次下载 ~1.6 GB 模型 |
-| 图文 OCR | macOS + Xcode command-line tools（`swiftc`）；非 macOS 可用 Agent 自身的视觉能力读图 |
-| 抖音 / 快手 | Node.js 22+、Chrome/Chromium、Playwright |
-| 下载 | `curl`（脚本内置纯 Python Range 兜底） |
+| Local transcription | Python 3.10+, `faster-whisper`, `av`; ~1.6 GB model on first run |
+| Image OCR | macOS + Xcode command-line tools (`swiftc`); on other OSes, use your agent's own vision capability |
+| Douyin / Kuaishou | Node.js 22+, Chrome/Chromium, Playwright |
+| Download | `curl` (with a pure-Python Range fallback built in) |
 
-浏览器路径默认自动发现，也可显式指定：
+Browser path is auto-discovered, or set explicitly:
 
 ```bash
 export DOUYIN_CHROME=/path/to/Chromium
 ```
 
-## 常见问题
+## Troubleshooting
 
-| 现象 | 原因 | 处理 |
+| Symptom | Cause | Fix |
 |---|---|---|
-| 抖音解析出旧数据 / 空内容 | 登录态过期或触发风控，看 `VERDICT` | 重跑 `login.mjs` 扫码 |
-| 下载下来只有 355 字节 | 403 HTML 被当成视频 | 用 core 脚本，别用裸 `curl` |
-| 小红书解析失败 | 链接缺 `xsec_token` | 换 App 内重新分享的链接 |
-| 快手拿不到标题 | 分享页结构变化 | 脚本会从 DOM 兜底提取，失败时更新适配层 |
-| 转录报 `metadata_errors` | PyAV 19+ 与 faster-whisper 不兼容 | core 脚本已内置补丁 |
-| `SingletonLock` 错误 | 同一 profile 开了两个浏览器 | 关掉另一个，清理锁文件 |
-| 二维码看不到 | 窗口被遮挡 | 切到浏览器窗口，脚本每 ~100 秒刷新二维码 |
+| Douyin returns stale or empty data | Login expired or risk control triggered — check `VERDICT` | Re-run `login.mjs` |
+| Downloaded file is 355 bytes | 403 HTML mistaken for video | Use the core script, not bare `curl` |
+| Xiaohongshu parse fails | Link missing `xsec_token` | Get a fresh in-app share link |
+| Kuaishou title missing | Share-page structure changed | The script falls back to DOM extraction; update the adapter if needed |
+| `metadata_errors` on transcription | PyAV 19+ vs faster-whisper incompatibility | Core script has a built-in patch |
+| `SingletonLock` error | Two browsers on one profile | Close the other; remove lock files |
+| QR code not visible | Window hidden behind another app | Switch to the browser window; it refreshes every ~100s |
 
-## 隐私与安全
+## Privacy and safety
 
-- 转录、OCR、HTML 渲染全部本地完成，音视频和图片不上传第三方。
-- 抖音登录态只存在本机 profile 目录；不要提交或分享该目录。
-- 复制仓库后请检查没有带入 `*.env`、cookie、token、个人 open_id。
-- 平台链接和接口属于各平台所有，本项目与这些平台无关联、未获背书。请遵守当地法律与平台条款，仅用于合法的个人或研究用途。
+- Transcription, OCR, and HTML rendering are all local. Audio, video, and images are never uploaded to third parties.
+- The Douyin login profile lives only on your machine. Never commit or share that directory.
+- Before publishing a fork, check for stray `*.env`, cookies, tokens, or personal open_ids.
+- Platform links and interfaces belong to their respective owners. This project is unaffiliated and unendorsed. Use it lawfully and respect platform terms.
 
-## 项目结构
+## Project structure
 
 ```
 social2md/
-├── SKILL.md                    Agent 入口：路由规则 + 通用流程
+├── SKILL.md                    Agent entry point: routing + common workflow
 ├── references/
-│   ├── xhs.md                  小红书坑位与字段结构
-│   ├── douyin.md               抖音风控、CDP 时序、登录与判据
-│   └── kuaishou.md             快手分享页解析兜底
+│   ├── xhs.md                  Xiaohongshu pitfalls and field schema
+│   ├── douyin.md               Anti-bot, CDP timing, login, verdict gate
+│   └── kuaishou.md             Share-page parsing fallbacks
 ├── scripts/
-│   ├── core/                   下载 / 转录 / HTML（共享，平台无关）
+│   ├── core/                   Download / transcribe / HTML (shared)
 │   │   ├── download_video.py
 │   │   ├── transcribe.py
 │   │   └── md_to_html.py
 │   ├── xhs/                    fetch_xhs.py · download_images.py · ocr_images.py · ocr_vision.swift
 │   ├── douyin/                 resolve_link.mjs · login.mjs · cdp_extract.mjs · dy_common.mjs
 │   └── kuaishou/               resolve_kuaishou.mjs
-├── install.sh                  一键软链到所有 Agent 框架
+├── install.sh                  One-shot symlink into all agent frameworks
 ├── LICENSE
 └── .gitignore
 ```
 
-## 路线图
+## Roadmap
 
-- [ ] 字幕优先路径（有官方字幕时跳过 Whisper，进一步提速）
-- [ ] 更多平台：B站 / 公众号 / 微博
-- [ ] 输出结构化字段（YAML frontmatter），便于 Obsidian / Dataview 检索
-- [ ] 更细的财经数字校验与术语词典
-- [ ] 一键 `npx skills add` 安装
+- [ ] Caption-first path (skip Whisper when official subtitles exist)
+- [ ] More platforms: Bilibili / WeChat Official Accounts / Weibo
+- [ ] Structured output fields (YAML frontmatter) for Obsidian / Dataview
+- [ ] Finance-specific figure verification and terminology dictionary
+- [ ] One-command `npx skills add` install
 
-## 贡献
+## Contributing
 
-欢迎提 Issue 和 PR。新增平台请以「薄适配层 + 复用 core」为原则；踩过的坑请写进 `references/<platform>.md`，让下一个人不用再踩。提交前确认：命令实测通过、示例里没有个人路径或凭据、没有把 cookie / token / 采集原文提交进仓库。
+Issues and PRs are welcome. New platforms should follow the thin-adapter + shared-core pattern, and pitfalls belong in `references/<platform>.md` so nobody has to rediscover them. Before submitting: test the commands, replace personal paths, and never commit cookies, tokens, or collected content.
 
 ## License
 
-MIT — 见 [LICENSE](LICENSE)。
+MIT — see [LICENSE](LICENSE).
 
 ---
 
-> 如果这个项目帮你省了时间，点个 star 让更多人看到。它解决的问题很具体：把中文社媒里那些"刷过就忘"的内容，真正留下来。
+> If this saved you time, a star helps others find it. The problem is simple: keep the content you scroll past, instead of losing it.
