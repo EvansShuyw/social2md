@@ -1,0 +1,21 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.log
+.env
+.env.*.local
+
+# Runtime state — never commit login profiles or collected content
+douyin-profile/
+raw/
+minutes/
+*.mp4
+*.srt
+transcript.txt
+digest.md
+digest.html
+note.json
+meta.json
+
+# Node deps (if a user installs playwright locally in the repo)
+node_modules/
