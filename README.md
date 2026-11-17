@@ -65,7 +65,13 @@ python3 -m pip install faster-whisper av
 export HF_ENDPOINT=https://hf-mirror.com
 ```
 
-让 Agent 框架发现这个 Skill —— 把它软链到框架的 skills 目录即可（各框架都支持软链）：
+让 Agent 框架发现这个 Skill —— 跑一键脚本，它会软链到全部 8 个框架路径（幂等，可重复运行）：
+
+```bash
+chmod +x install.sh && ./install.sh
+```
+
+或者手动软链到你在用的框架：
 
 ```bash
 ln -s "$(pwd)" ~/.claude/skills/social2md           # Claude Code
@@ -74,7 +80,7 @@ ln -s "$(pwd)" ~/.workbuddy/skills/social2md        # WorkBuddy
 ln -s "$(pwd)" ~/.hermes/skills/social2md           # Hermes
 ```
 
-`/Users/...` 之类绝对路径不需要，clone 到哪都能用。想一次链到全部框架，把上面几行放进循环即可。
+`/Users/...` 之类绝对路径不需要，clone 到哪都能用。
 
 > 仓库根目录就是 Skill 目录，`SKILL.md` 的 `name` 已是 `social2md`。
 
@@ -214,14 +220,17 @@ social2md/
 │   ├── xhs.md                  小红书坑位与字段结构
 │   ├── douyin.md               抖音风控、CDP 时序、登录与判据
 │   └── kuaishou.md             快手分享页解析兜底
-└── scripts/
-    ├── core/                   下载 / 转录 / HTML（共享，平台无关）
-    │   ├── download_video.py
-    │   ├── transcribe.py
-    │   └── md_to_html.py
-    ├── xhs/                    fetch_xhs.py · download_images.py · ocr_images.py · ocr_vision.swift
-    ├── douyin/                 resolve_link.mjs · login.mjs · cdp_extract.mjs · dy_common.mjs
-    └── kuaishou/               resolve_kuaishou.mjs
+├── scripts/
+│   ├── core/                   下载 / 转录 / HTML（共享，平台无关）
+│   │   ├── download_video.py
+│   │   ├── transcribe.py
+│   │   └── md_to_html.py
+│   ├── xhs/                    fetch_xhs.py · download_images.py · ocr_images.py · ocr_vision.swift
+│   ├── douyin/                 resolve_link.mjs · login.mjs · cdp_extract.mjs · dy_common.mjs
+│   └── kuaishou/               resolve_kuaishou.mjs
+├── install.sh                  一键软链到所有 Agent 框架
+├── LICENSE
+└── .gitignore
 ```
 
 ## 路线图
